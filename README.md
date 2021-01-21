@@ -19,3 +19,4 @@ Example:
 ```
 GITHUB_API_TOKEN="notatoken" BEGIN_DATE="2020-10-01T00:00:00-08:00" END_DATE="2020-10-30T23:59:59-08:00" go run main.go
 ```
+TESTING
