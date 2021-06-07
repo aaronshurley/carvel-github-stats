@@ -107,9 +107,6 @@ func main() {
 			}
 
 			timeOfEngagementForComments := findTimeOfFirstCommentNotFromUser(comments, *pr.User.Login)
-			if err != nil {
-				panic(err)
-			}
 
 			reviews, _, err := client.PullRequests.ListReviews(context.Background(), GithubOrg, *carvelRepo.Name, *pr.Number, &github.ListOptions{PerPage: 1000})
 			if err != nil {
@@ -117,9 +114,6 @@ func main() {
 			}
 
 			timeOfEngagementForReviews := findTimeOfEngagementForReviews(reviews)
-			if err != nil {
-				panic(err)
-			}
 
 			timesToConsider := []time.Time{timeOfEngagementForComments, timeOfEngagementForReviews}
 			if *pr.State == "closed" {
@@ -136,6 +130,14 @@ func main() {
 			// get the earliest time of engagement
 			timeOfEngagement := findNonZeroMinimum(timesToConsider)
 			dur := timeOfEngagement.Sub(*pr.CreatedAt)
+			if timeOfEngagement.IsZero() {
+				// if a PR is still open, set the duration to an arbitrarily high value
+				// so that it results near the end of the sorted list
+				dur, err = time.ParseDuration("10000h")
+				if err != nil {
+					panic(err)
+				}
+			}
 
 			pullRequestInfos = append(pullRequestInfos,
 				PullRequestInfo{
