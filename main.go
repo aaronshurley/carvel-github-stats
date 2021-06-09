@@ -154,7 +154,7 @@ func main() {
 	})
 
 	for i, prInfo := range pullRequestInfos {
-		fmt.Printf("%v. %v #%v: %v\n", i, *prInfo.Repo.Name, *prInfo.PR.Number, prInfo.TimeToEngagement)
+		fmt.Printf("%v. %v #%v: %v by %v\n", i+1, *prInfo.Repo.Name, *prInfo.PR.Number, prInfo.TimeToEngagement, *prInfo.PR.User.Login)
 	}
 
 	fmt.Println("# of PRs: ", len(pullRequestInfos))
@@ -205,6 +205,7 @@ func findTimeOfEngagementForReviews(reviews []*github.PullRequestReview) time.Ti
 	return time.Time{}
 }
 
+// returns time.Time if only zero-values are provided
 func findNonZeroMinimum(times []time.Time) time.Time {
 	var min time.Time
 	for _, time := range times {
