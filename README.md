@@ -12,7 +12,7 @@ repos. At this time, it returns the following information:
 # To Run
 1. clone the repo
 1. set the required environment variables: `GITHUB_API_TOKEN`, `BEGIN_DATE`, `END_DATE`
-  1. to generate a GitHub API Token, follow [these instructions](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
+    1. to generate a GitHub API Token, follow [these instructions](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
 1. run
 
 Example:
