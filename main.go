@@ -83,15 +83,25 @@ func main() {
 	// get PRs within timeframe for all repos
 	pullRequestInfos := []PullRequestInfo{}
 	for _, carvelRepo := range carvelRepos {
+		var complete bool
 		opt := &github.PullRequestListOptions{
 			State:       "all",
 			Sort:        "created",
 			Direction:   "asc",
-			ListOptions: github.ListOptions{PerPage: 1000},
+			ListOptions: github.ListOptions{PerPage: 100},
 		}
-		repoPRs, _, err := client.PullRequests.List(context.Background(), GithubOrg, *carvelRepo.Name, opt)
-		if err != nil {
-			panic(err)
+
+		repoPRs := []*github.PullRequest{}
+		for i := 1; !complete; i++ {
+			opt.ListOptions.Page = i
+			prs, _, err := client.PullRequests.List(context.Background(), GithubOrg, *carvelRepo.Name, opt)
+			if err != nil {
+				panic(err)
+			}
+			repoPRs = append(repoPRs, prs...)
+			if len(prs) < 100 {
+				complete = true
+			}
 		}
 
 		fmt.Printf("========== %s ==========\n", *carvelRepo.Name)
