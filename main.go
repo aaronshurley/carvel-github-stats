@@ -236,6 +236,10 @@ func findNonZeroMinimum(times []time.Time) time.Time {
 
 func findMedian(prInfos []PullRequestInfo) time.Duration {
 	count := len(prInfos)
+	if count == 0 {
+		return 0
+	}
+
 	mid := int(math.Floor(float64(count) / 2.0))
 	// if even
 	if count%2 == 0 {
