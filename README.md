@@ -21,7 +21,7 @@ GITHUB_API_TOKEN="notatoken" BEGIN_DATE="2022-01-29T00:00:00-08:00" END_DATE="20
 ```
 
 # How Aaron collects quarterly metrics
-1. export variables:
+1. set environment variables:
 
     ```
     export GITHUB_API_TOKEN="notatoken"
