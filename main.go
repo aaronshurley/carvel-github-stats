@@ -71,12 +71,39 @@ func main() {
 	}
 
 	// get carvel projects from org
-	carvelRepos := []*github.Repository{}
+	carvelReposToFilter := []*github.Repository{}
 	for _, repo := range repos {
 		for _, topic := range repo.Topics {
 			if topic == CarvelTopic {
-				carvelRepos = append(carvelRepos, repo)
+				carvelReposToFilter = append(carvelReposToFilter, repo)
 			}
+		}
+	}
+
+        // remove non-Carvel repos
+	reposToSkip := []string{
+		"kubeapps",
+		"tanzu-framework",
+		"package-for-kpack",
+		"package-for-cartographer",
+		"package-for-kubeapps",
+		"package-for-helm-controller",
+		"package-for-kustomize-controller",
+		"package-for-kpack-dependencies",
+		"package-for-source-controller",
+		"package-for-application-toolkit",
+	}
+
+	carvelRepos := []*github.Repository{}
+	for _, repoToCheck := range carvelReposToFilter {
+		found := false
+		for _, repoToSkip := range reposToSkip {
+			if *repoToCheck.Name == repoToSkip {
+				found = true
+			}
+		}
+		if !found {
+			carvelRepos = append(carvelRepos, repoToCheck)
 		}
 	}
 
