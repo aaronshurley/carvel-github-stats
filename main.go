@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	GithubOrg   = "vmware-tanzu"
+	GithubOrg   = "carvel-dev"
 	CarvelTopic = "carvel"
 	PivotalBot  = "pivotal-issuemaster"
 	VMwareBot   = "vmwclabot"
